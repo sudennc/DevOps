@@ -162,3 +162,98 @@
 diskine taşınır**
 
 	[root@localhost sude.celen] sudo find / -name bootcamp.txt -exec mv -t /bootcamp {} +
+
+
+
+
+**CASE 2 **
+
+  * Makinemize güncelleştirme yaptık*
+  
+		  yum -y update
+		  
+		  
+  *Epel repomuzu yükledik*
+  
+  
+		  yum install epel-release 
+		  
+		  
+  *ngnix kurduk*
+  
+		  sudo yum install nginx -y 
+		  
+		  
+  *Açılırken ngnix i başlatmak için emir verdik*
+  
+  
+      	 sudo systemctl enable nginx 
+       	sudo systemctl start nginx
+		
+		
+  *Frewall umuzu ayarladık*
+  
+  
+		   	sudo firewall-cmd --permanent --zone=public --add-service=http 
+     		 sudo firewall-cmd --permanent --zone=public --add-service=https
+       		sudo firewall-cmd --reload
+			
+		
+			
+* *mariadb server kurduk*
+
+      	yum install mariadb-server -y 
+			 
+		 
+* *Açılırken mariadb yi başlatmak için emir verdik**
+
+     	 	 systemctl start mariadb 
+       		systemctl enable mariadb
+			
+** Root şifremizi verdik*
+  
+     		mysql_secure_installation 
+			
+*  *MYSQL e bağlandık burada yeni bir database oluşturup kullanıcı açtık.**
+
+      	 mysql -u root -p 
+
+* *PHP Kurulumu yaptık*
+
+      	sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y 
+        sudo yum-config-manager --enable remi-php72 -y php kurduk
+      	yum install php-cli php-fpm php-mysql php-json php-opcache php-mbstring php-xml php-gd php-curl -y
+			
+			
+***Varsayılan olarak PHP FPM, 9000 bağlantı noktasında kullanıcı apache olarak çalışacaktır. Kullanıcıyı nginx olarak değiştireceğiz*
+
+      cd /etc/php-fpm.d/www.conf
+      vim /etc/php-fpm.d/www.conf 
+	  
+Açılırken PHP yi başlatmak için emir verdik*
+
+      sudo systemctl enable php-fpm
+      sudo systemctl start php-fpm
+	  
+Wordpress dosyasını kurarız. 
+
+      cd /srv/
+      mkdir trendyolbc
+	  
+ cd /tmp wordpressi tmp klasörüne kuruyoruz çünkü sunucumuzu yeniden başlattğımızda bulunmasını istemiyoruz.
+
+      wget https://wordpress.org/latest.tar.gz
+	  
+	  
+ rardan çıakrdık
+ 
+      	tar -xzf  latest.tar.gz  
+   	cd wordpress/
+		   
+  Wordpress i srv nin altına kopyaladık.
+  
+      cp -rf wordpress/* /srv/trendyolbc/
+      cd /srv/trendyolbc/
+      
+
+***Not Bundan sonrasını devam ettiremedim çok araştırdım , bootcampteki arkadaşlara sordum, hocalara danıştım,  gerçekten çok fazla araştırma yaptım ama tam sonuca ulaşamadım hep bir yerde takıldım. Projeyi hiç eklememek yerine en azından yaptığım yere kadar olan kısmı eklemek istedim. Doğruysa da yanlışsa da elimdeki bu. Umarım çok fazla sorun yaratmaz. Bu durumdan dolayı hocalarımdan ve Trendyol ekibinden de ayrıca özür dilerim. Bu konu hakkında daha fazla araştırma yapacağım.***
